@@ -39,3 +39,9 @@ jobs:
           chmod 755 /beispiel-arzt.de
           quit
           EOF
+
+      - name: Wait for deployment propagation
+        run: sleep 30
+
+      - name: Post-Deploy Link-Check
+        run: node scripts/check-links.mjs
