@@ -28,12 +28,12 @@ export const siteConfig = {
     },
   },
 
-  // Navigation
+  // Navigation (trailing slashes passend zu trailingSlash: 'always' in astro.config.mjs)
   navigation: [
     { name: "Start", href: "/" },
-    { name: "Über mich", href: "/ueber-mich" },
-    { name: "Schwerpunkte", href: "/schwerpunkte" },
-    { name: "Kontakt", href: "/kontakt", isCTA: true },
+    { name: "Über mich", href: "/ueber-mich/" },
+    { name: "Schwerpunkte", href: "/schwerpunkte/" },
+    { name: "Kontakt", href: "/kontakt/", isCTA: true },
   ],
 
   // Footer
@@ -41,13 +41,13 @@ export const siteConfig = {
     description: "Facharzt für Allgemeinmedizin mit Schwerpunkt ganzheitliche Versorgung in Berlin.",
     links: [
       { name: "Start", href: "/" },
-      { name: "Über mich", href: "/ueber-mich" },
-      { name: "Schwerpunkte", href: "/schwerpunkte" },
-      { name: "Kontakt", href: "/kontakt" },
+      { name: "Über mich", href: "/ueber-mich/" },
+      { name: "Schwerpunkte", href: "/schwerpunkte/" },
+      { name: "Kontakt", href: "/kontakt/" },
     ],
     legal: [
-      { name: "Impressum", href: "/impressum" },
-      { name: "Datenschutz", href: "/datenschutz" },
+      { name: "Impressum", href: "/impressum/" },
+      { name: "Datenschutz", href: "/datenschutz/" },
     ],
   },
 
