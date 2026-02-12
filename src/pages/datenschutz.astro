@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../site.config';
+---
+
+<Layout
+  title={`Datenschutz — ${siteConfig.owner.name}`}
+  description={`Datenschutzerklärung von ${siteConfig.domain.replace('https://', '')} — Informationen zum Umgang mit Ihren Daten.`}
+>
+  <section class="section">
+    <div class="container-narrow">
+      <h1 class="text-4xl font-bold mb-8">Datenschutzerklärung</h1>
+
+      <div class="prose prose-lg max-w-none text-gray-muted space-y-8">
+        <section>
+          <h2 class="text-2xl font-bold text-dark mb-4">1. Datenschutz auf einen Blick</h2>
+
+          <h3 class="text-xl font-semibold text-dark mb-3 mt-6">Allgemeine Hinweise</h3>
+          <p>
+            Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen
+            Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit
+            denen Sie persönlich identifiziert werden können.
+          </p>
+
+          <h3 class="text-xl font-semibold text-dark mb-3 mt-6">Datenerfassung auf dieser Website</h3>
+          <p>
+            <strong class="text-dark">Wer ist verantwortlich für die Datenerfassung auf dieser Website?</strong><br />
+            Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Dessen Kontaktdaten
+            können Sie dem Impressum dieser Website entnehmen.
+          </p>
+          <p>
+            <strong class="text-dark">Wie erfassen wir Ihre Daten?</strong><br />
+            Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich
+            z.B. um Daten handeln, die Sie per E-Mail an uns senden.
+          </p>
+          <p>
+            Andere Daten werden automatisch oder nach Ihrer Einwilligung beim Besuch der Website durch
+            unsere IT-Systeme erfasst. Das sind vor allem technische Daten (z.B. Internetbrowser, Betriebssystem
+            oder Uhrzeit des Seitenaufrufs).
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-dark mb-4">2. Hosting</h2>
+          <p>
+            Diese Website wird bei einem externen Dienstleister gehostet (Hoster). Die personenbezogenen Daten,
+            die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Hierbei kann
+            es sich v.a. um IP-Adressen, Kontaktanfragen, Meta- und Kommunikationsdaten, Vertragsdaten,
+            Kontaktdaten, Namen, Websitezugriffe und sonstige Daten, die über eine Website generiert werden, handeln.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-dark mb-4">3. Allgemeine Hinweise und Pflichtinformationen</h2>
+
+          <h3 class="text-xl font-semibold text-dark mb-3 mt-6">Datenschutz</h3>
+          <p>
+            Der Betreiber dieser Seiten nimmt den Schutz Ihrer persönlichen Daten sehr ernst. Wir behandeln
+            Ihre personenbezogenen Daten vertraulich und entsprechend den gesetzlichen Datenschutzvorschriften
+            sowie dieser Datenschutzerklärung.
+          </p>
+
+          <h3 class="text-xl font-semibold text-dark mb-3 mt-6">Hinweis zur verantwortlichen Stelle</h3>
+          <p>
+            Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:<br /><br />
+            {siteConfig.owner.name}<br />
+            [Adresse]<br />
+            E-Mail: <a href={`mailto:${siteConfig.owner.email}`} class="link">{siteConfig.owner.email}</a>
+          </p>
+
+          <h3 class="text-xl font-semibold text-dark mb-3 mt-6">Widerruf Ihrer Einwilligung</h3>
+          <p>
+            Viele Datenverarbeitungsvorgänge sind nur mit Ihrer ausdrücklichen Einwilligung möglich. Sie können
+            eine bereits erteilte Einwilligung jederzeit widerrufen. Die Rechtmäßigkeit der bis zum Widerruf
+            erfolgten Datenverarbeitung bleibt vom Widerruf unberührt.
+          </p>
+
+          <h3 class="text-xl font-semibold text-dark mb-3 mt-6">Beschwerderecht bei der zuständigen Aufsichtsbehörde</h3>
+          <p>
+            Im Falle von Verstößen gegen die DSGVO steht den Betroffenen ein Beschwerderecht bei einer
+            Aufsichtsbehörde zu.
+          </p>
+
+          <h3 class="text-xl font-semibold text-dark mb-3 mt-6">SSL- bzw. TLS-Verschlüsselung</h3>
+          <p>
+            Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte
+            eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die
+            Adresszeile des Browsers von "http://" auf "https://" wechselt und an dem Schloss-Symbol in Ihrer
+            Browserzeile.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-dark mb-4">4. Datenerfassung auf dieser Website</h2>
+
+          <h3 class="text-xl font-semibold text-dark mb-3 mt-6">Server-Log-Dateien</h3>
+          <p>
+            Der Provider der Seiten erhebt und speichert automatisch Informationen in so genannten
+            Server-Log-Dateien, die Ihr Browser automatisch an uns übermittelt. Dies sind:
+          </p>
+          <ul class="list-disc pl-6 space-y-1">
+            <li>Browsertyp und Browserversion</li>
+            <li>verwendetes Betriebssystem</li>
+            <li>Referrer URL</li>
+            <li>Hostname des zugreifenden Rechners</li>
+            <li>Uhrzeit der Serveranfrage</li>
+            <li>IP-Adresse</li>
+          </ul>
+          <p>
+            Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen.
+          </p>
+
+          <h3 class="text-xl font-semibold text-dark mb-3 mt-6">Anfrage per E-Mail</h3>
+          <p>
+            Wenn Sie uns per E-Mail kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden
+            personenbezogenen Daten (Name, Anfrage) zum Zwecke der Bearbeitung Ihres Anliegens bei uns
+            gespeichert und verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-2xl font-bold text-dark mb-4">5. Externe Links</h2>
+          <p>
+            Diese Website enthält Links zu externen Websites.
+            Wenn Sie diesen Links folgen, verlassen Sie diese Website. Für den Datenschutz auf diesen
+            externen Websites sind wir nicht verantwortlich. Bitte informieren Sie sich dort über die
+            jeweils geltenden Datenschutzbestimmungen.
+          </p>
+        </section>
+      </div>
+    </div>
+  </section>
+</Layout>

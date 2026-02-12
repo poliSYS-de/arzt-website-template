@@ -1,0 +1,3 @@
+# Crawling gesperrt bis Go-Live
+User-agent: *
+Disallow: /

@@ -1,0 +1,60 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { siteConfig } from '../../site.config';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const schwerpunkte = await getCollection('schwerpunkte');
+  return schwerpunkte.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<Layout
+  title={`${entry.data.title} — ${siteConfig.owner.name}`}
+  description={entry.data.description}
+>
+  <!-- Hero mit Bild -->
+  <section class="relative">
+    <div class="w-full h-64 md:h-80 bg-gray-100 overflow-hidden">
+      <img
+        src={entry.data.image}
+        alt={entry.data.image_alt}
+        class="w-full h-full object-cover"
+        loading="eager"
+      />
+    </div>
+  </section>
+
+  <!-- Inhalt -->
+  <section class="section">
+    <div class="container-narrow">
+      <a href="/schwerpunkte/" class="text-accent text-sm hover:underline mb-6 inline-block">&larr; Alle Schwerpunkte</a>
+      <h1 class="text-4xl md:text-5xl font-bold mb-8">{entry.data.title}</h1>
+
+      <div class="prose prose-lg max-w-none text-gray-muted
+        prose-headings:text-dark prose-headings:font-bold
+        prose-h2:text-2xl prose-h2:mt-10 prose-h2:mb-4
+        prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+        prose-a:text-accent hover:prose-a:text-accent-dark
+        prose-strong:text-dark
+        prose-li:marker:text-accent
+      ">
+        <Content />
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-12 pt-8 border-t border-gray-200">
+        <div class="flex flex-col sm:flex-row gap-4 items-center">
+          <a href="/kontakt" class="btn-primary">Kontakt aufnehmen</a>
+          <a href="/schwerpunkte/" class="btn-outline">Alle Schwerpunkte</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,140 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../site.config';
+import { getCollection } from 'astro:content';
+
+const schwerpunkte = (await getCollection('schwerpunkte')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Layout
+  title={`${siteConfig.owner.name} — ${siteConfig.owner.role} in ${siteConfig.owner.location}`}
+  description={siteConfig.seo.defaultDescription}
+>
+  <!-- Hero Section -->
+  <section class="section bg-gradient-to-br from-white to-gray-light">
+    <div class="container-narrow">
+      <div class="flex flex-col md:flex-row items-center gap-12">
+        <div class="md:w-2/3 text-center md:text-left">
+          <p class="subheadline mb-6">{siteConfig.owner.role}</p>
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-dark leading-tight mb-6">
+            {siteConfig.owner.name}
+          </h1>
+          <p class="text-lg text-gray-muted mb-3 font-medium">
+            {siteConfig.branding.tagline.split(' — ')[1] || siteConfig.branding.tagline}
+          </p>
+          <p class="text-lg text-gray-muted max-w-2xl mb-10">
+            {siteConfig.seo.defaultDescription}
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+            <a href="/kontakt" class="btn-primary">Kontakt aufnehmen</a>
+            <a href="/schwerpunkte" class="btn-outline">Schwerpunkte ansehen</a>
+          </div>
+        </div>
+        <div class="md:w-1/3">
+          <div class="w-full aspect-[3/4] rounded-2xl bg-gray-100 flex items-center justify-center overflow-hidden">
+            <img
+              src="/images/portrait.webp"
+              alt={`${siteConfig.owner.name} — ${siteConfig.owner.role}`}
+              class="w-full h-full object-cover rounded-2xl"
+              loading="eager"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kurzvorstellung -->
+  <section class="section">
+    <div class="container-narrow">
+      <div class="grid md:grid-cols-5 gap-12 items-start">
+        <div class="md:col-span-3">
+          <p class="subheadline mb-4">Mein Ansatz</p>
+          <h2 class="text-3xl font-bold mb-6">Der Patient im Mittelpunkt</h2>
+          <div class="space-y-4 text-gray-muted text-lg">
+            <p>
+              Bei mir steht der Patient im Mittelpunkt. Die Grundlage für
+              die allumfassende Betreuung ist ein möglichst umfangreiches
+              Bild Ihrer Gesundheitshistorie. Ich lege großen Wert auf das
+              Vertrauensverhältnis zwischen Patient und Behandler.
+            </p>
+            <p>
+              <a href="/ueber-mich" class="link">Mehr über mich erfahren &rarr;</a>
+            </p>
+          </div>
+        </div>
+        <div class="md:col-span-2">
+          <div class="bg-gray-light rounded-2xl p-8">
+            <h3 class="font-semibold text-dark mb-4">Auf einen Blick</h3>
+            <ul class="space-y-3 text-sm text-gray-muted">
+              <li class="flex items-start gap-2">
+                <span class="text-accent font-bold mt-0.5">&#10003;</span>
+                {siteConfig.owner.role}
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-accent font-bold mt-0.5">&#10003;</span>
+                Standort: {siteConfig.owner.location}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Schwerpunkte-Preview (SEO: Links zu allen Schwerpunkt-Unterseiten) -->
+  <section class="section bg-gray-light">
+    <div class="container-wide">
+      <p class="subheadline text-center mb-4">Behandlungsspektrum</p>
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">
+        Schwerpunkte
+      </h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {schwerpunkte.map((sp) => (
+          <a href={`/schwerpunkte/${sp.slug}/`} class="card group">
+            <h3 class="text-lg font-semibold mb-2 group-hover:text-accent transition-colors">{sp.data.title}</h3>
+            <p class="text-gray-muted text-sm">{sp.data.description}</p>
+          </a>
+        ))}
+      </div>
+      <div class="text-center mt-10">
+        <a href="/schwerpunkte" class="link">Alle Schwerpunkte ansehen &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cross-Links (SEO: arztbesuche.de Backlink) -->
+  {siteConfig.crossLinks.arztbesuche.url && (
+    <section class="py-16 border-y border-gray-100">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <p class="text-gray-muted">
+          Hausbesuche auch über
+          <a
+            href={siteConfig.crossLinks.arztbesuche.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link"
+          >
+            {siteConfig.crossLinks.arztbesuche.text}
+          </a>
+        </p>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="section bg-dark text-white">
+    <div class="container-narrow text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">
+        Haben Sie Fragen?
+      </h2>
+      <p class="text-gray-400 mb-8 max-w-xl mx-auto">
+        Ich freue mich auf Ihre Nachricht. Gemeinsam finden wir den besten Weg
+        für Ihre gesundheitliche Versorgung.
+      </p>
+      <a href="/kontakt" class="btn-primary">Kontakt aufnehmen</a>
+    </div>
+  </section>
+</Layout>

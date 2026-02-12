@@ -1,0 +1,63 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { siteConfig } from '../../site.config';
+import { getCollection } from 'astro:content';
+
+const schwerpunkte = (await getCollection('schwerpunkte')).sort(
+  (a, b) => a.data.order - b.data.order
+);
+---
+
+<Layout
+  title={`Behandlungsschwerpunkte — ${siteConfig.owner.name}`}
+  description={`Meine Behandlungsschwerpunkte: ${schwerpunkte.map(s => s.data.title).join(', ')}.`}
+>
+  <!-- Hero -->
+  <section class="section bg-gradient-to-br from-white to-gray-light">
+    <div class="container-narrow">
+      <p class="subheadline mb-6">Behandlungsspektrum</p>
+      <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-8">
+        Meine <span class="text-accent">Schwerpunkte</span>
+      </h1>
+      <p class="text-lg text-gray-muted max-w-2xl">
+        Ein breites Spektrum der allgemeinmedizinischen Versorgung —
+        immer mit dem Ziel, Sie als ganzen Menschen zu betreuen.
+      </p>
+    </div>
+  </section>
+
+  <!-- Grid -->
+  <section class="section">
+    <div class="container-wide">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {schwerpunkte.map((sp) => (
+          <a href={`/schwerpunkte/${sp.slug}/`} class="group block">
+            <div class="rounded-2xl overflow-hidden bg-gray-100 aspect-[4/3] mb-4">
+              <img
+                src={sp.data.image}
+                alt={sp.data.image_alt}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+              />
+            </div>
+            <h2 class="text-xl font-semibold mb-2 group-hover:text-accent transition-colors">
+              {sp.data.title}
+            </h2>
+            <p class="text-gray-muted text-sm">{sp.data.description}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section bg-dark text-white">
+    <div class="container-narrow text-center">
+      <h2 class="text-3xl font-bold mb-6 text-white">Fragen zu meinen Leistungen?</h2>
+      <p class="text-gray-400 mb-8 max-w-xl mx-auto">
+        Ich berate Sie gerne zu Ihren individuellen Bedürfnissen.
+      </p>
+      <a href="/kontakt" class="btn-primary">Kontakt aufnehmen</a>
+    </div>
+  </section>
+</Layout>

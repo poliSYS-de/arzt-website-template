@@ -1,0 +1,75 @@
+---
+import Navigation from '../components/Navigation.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import { siteConfig } from '../site.config';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = siteConfig.seo.defaultDescription,
+  ogImage = siteConfig.seo.defaultOgImage,
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const canonicalURL = `${siteConfig.domain}${currentPath}`;
+const ogImageURL = ogImage.startsWith('http') ? ogImage : `${siteConfig.domain}${ogImage}`;
+---
+
+<!doctype html>
+<html lang={siteConfig.language}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="author" content={siteConfig.seo.author} />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content={siteConfig.seo.themeColor} />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={siteConfig.locale} />
+    <meta property="og:site_name" content={siteConfig.owner.name} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={title} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Font Preload -->
+    <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-700.woff2" as="font" type="font/woff2" crossorigin />
+
+    <!-- Canonical -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen flex flex-col bg-white">
+    <Navigation currentPath={currentPath} />
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

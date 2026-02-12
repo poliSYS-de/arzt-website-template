@@ -1,0 +1,22 @@
+# build output
+dist/
+
+# dependencies
+node_modules/
+
+# astro
+.astro/
+
+# environment variables
+.env
+.env.local
+
+# macOS
+.DS_Store
+
+# editor
+.vscode/
+*.swp
+
+# local-only (Fotos, die nicht ins Git sollen)
+local-only/

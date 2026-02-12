@@ -1,0 +1,41 @@
+name: Build & Deploy to checkdomain.de
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Astro Site
+        run: npm run build
+
+      - name: Deploy to checkdomain.de via FTP
+        env:
+          FTP_HOST: ${{ secrets.FTP_HOST }}
+          FTP_USER: ${{ secrets.FTP_USER }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          sudo apt-get install -y -qq lftp
+          lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" <<EOF
+          set ftp:ssl-allow yes
+          set ftp:ssl-force no
+          mirror --reverse --delete --no-perms --exclude-glob .cagefs --exclude-glob .cl.selector --verbose ./dist/ /beispiel-arzt.de/
+          chmod 755 /beispiel-arzt.de
+          quit
+          EOF

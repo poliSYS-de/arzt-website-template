@@ -1,0 +1,123 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../site.config';
+---
+
+<Layout
+  title={`Kontakt — ${siteConfig.owner.name}`}
+  description={`Kontaktieren Sie ${siteConfig.owner.name} — ${siteConfig.owner.role} in ${siteConfig.owner.location}. Per E-Mail oder über soziale Netzwerke.`}
+>
+  <!-- Hero -->
+  <section class="section bg-gradient-to-br from-white to-gray-light">
+    <div class="container-narrow">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div class="text-center md:text-left">
+          <p class="subheadline mb-4">Schreiben Sie mir</p>
+          <h1 class="text-4xl md:text-5xl font-bold text-dark mb-6">
+            <span class="text-accent">Kontakt</span> aufnehmen
+          </h1>
+          <p class="text-lg text-gray-muted">
+            Sie haben Fragen oder möchten einen Termin vereinbaren?
+            Ich freue mich auf Ihre Nachricht.
+          </p>
+        </div>
+        <div class="rounded-2xl bg-gray-100 aspect-[4/3] overflow-hidden flex items-center justify-center">
+          <img
+            src="/images/portrait.webp"
+            alt={`${siteConfig.owner.name} — freundliches Porträt`}
+            class="w-full h-full object-cover"
+            loading="eager"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Kontaktoptionen -->
+  <section class="section">
+    <div class="container-narrow">
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- E-Mail -->
+        <div class="card text-center">
+          <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h2 class="text-xl font-semibold mb-2">Per E-Mail</h2>
+          <p class="text-gray-muted mb-4">
+            Schreiben Sie mir direkt eine E-Mail.
+          </p>
+          <a href={`mailto:${siteConfig.owner.email}`} class="btn-primary">
+            E-Mail senden
+          </a>
+        </div>
+
+        <!-- Telefon (falls vorhanden) oder Social -->
+        {siteConfig.owner.phone ? (
+          <div class="card text-center">
+            <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+              </svg>
+            </div>
+            <h2 class="text-xl font-semibold mb-2">Telefonisch</h2>
+            <p class="text-gray-muted mb-4">
+              Rufen Sie mich an.
+            </p>
+            <a href={`tel:${siteConfig.owner.phone.replace(/\s/g, '')}`} class="btn-primary">
+              {siteConfig.owner.phone}
+            </a>
+          </div>
+        ) : (
+          <div class="card text-center">
+            <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h2 class="text-xl font-semibold mb-2">Netzwerk</h2>
+            <p class="text-gray-muted mb-4">
+              Vernetzen Sie sich mit mir online.
+            </p>
+            {siteConfig.social.length > 0 ? (
+              <a href={siteConfig.social[0].url} target="_blank" rel="noopener noreferrer" class="btn-outline">
+                {siteConfig.social[0].label}
+              </a>
+            ) : (
+              <a href={`mailto:${siteConfig.owner.email}`} class="btn-outline">
+                E-Mail senden
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Standort -->
+  <section class="section bg-gray-light">
+    <div class="container-narrow text-center">
+      <p class="subheadline mb-4">Standort</p>
+      <h2 class="text-3xl font-bold mb-6">{siteConfig.owner.location}</h2>
+      <p class="text-gray-muted max-w-xl mx-auto mb-6">
+        Ich bin als {siteConfig.owner.role} in {siteConfig.owner.location} tätig.
+      </p>
+      {siteConfig.crossLinks.arztbesuche.url && (
+        <div class="bg-white border border-gray-100 rounded-xl p-6 inline-block">
+          <p class="text-sm text-gray-muted">
+            Hausbesuche auch über
+            <a
+              href={siteConfig.crossLinks.arztbesuche.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="link"
+            >
+              {siteConfig.crossLinks.arztbesuche.text}
+            </a>
+          </p>
+        </div>
+      )}
+    </div>
+  </section>
+</Layout>

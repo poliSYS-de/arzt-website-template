@@ -1,0 +1,128 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { siteConfig } from '../site.config';
+---
+
+<Layout
+  title={`Über mich — ${siteConfig.owner.name}`}
+  description={`Akademische Laufbahn, Qualifikationen und persönlicher Hintergrund von ${siteConfig.owner.name} — ${siteConfig.owner.role} in ${siteConfig.owner.location}.`}
+>
+  <!-- Hero -->
+  <section class="section bg-gradient-to-br from-white to-gray-light">
+    <div class="container-narrow">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="subheadline mb-2">Über mich</p>
+          <h1 class="text-4xl md:text-5xl font-bold text-dark mb-6">
+            {siteConfig.owner.name}
+          </h1>
+          <p class="text-lg text-gray-muted">
+            {siteConfig.owner.role} mit dem Anspruch, jeden Patienten
+            ganzheitlich und individuell zu betreuen.
+          </p>
+        </div>
+        <div class="aspect-square rounded-2xl bg-gray-100 overflow-hidden flex items-center justify-center">
+          <img
+            src="/images/ueber-mich.webp"
+            alt={`${siteConfig.owner.name} — Porträt`}
+            class="w-full h-full object-cover"
+            loading="eager"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Werdegang -->
+  <section class="section">
+    <div class="container-narrow">
+      <p class="subheadline mb-4">Werdegang</p>
+      <h2 class="text-3xl font-bold mb-12">Akademische Laufbahn</h2>
+
+      <div class="relative">
+        <!-- Timeline Line -->
+        <div class="absolute left-4 md:left-8 top-0 bottom-0 w-0.5 bg-gray-200"></div>
+
+        <div class="space-y-8">
+          <!-- PLATZHALTER: Hier individuelle Timeline-Einträge einfügen -->
+          <div class="relative pl-12 md:pl-20">
+            <div class="absolute left-2 md:left-6 top-1 w-4 h-4 rounded-full bg-accent border-4 border-white shadow-sm"></div>
+            <p class="text-sm text-accent font-medium">Studium</p>
+            <h3 class="text-lg font-semibold text-dark">Humanmedizin</h3>
+            <p class="text-gray-muted text-sm mt-1">[Universität und Details hier ergänzen]</p>
+          </div>
+
+          <div class="relative pl-12 md:pl-20">
+            <div class="absolute left-2 md:left-6 top-1 w-4 h-4 rounded-full bg-accent border-4 border-white shadow-sm"></div>
+            <p class="text-sm text-accent font-medium">Facharztanerkennung</p>
+            <h3 class="text-lg font-semibold text-dark">{siteConfig.owner.role}</h3>
+            <p class="text-gray-muted text-sm mt-1">[Details hier ergänzen]</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Qualifikationen -->
+  <section class="section bg-gray-light">
+    <div class="container-wide">
+      <p class="subheadline text-center mb-4">Qualifikationen</p>
+      <h2 class="text-3xl font-bold mb-12 text-center">Fachliche Expertise</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- PLATZHALTER: Qualifikations-Karten hier ergänzen -->
+        <div class="card text-center">
+          <h3 class="font-semibold text-lg mb-2">Allgemeinmedizin</h3>
+          <p class="text-gray-muted text-sm">Facharztanerkennung</p>
+        </div>
+        <div class="card text-center">
+          <h3 class="font-semibold text-lg mb-2">[Zusatzqualifikation]</h3>
+          <p class="text-gray-muted text-sm">[Details]</p>
+        </div>
+        <div class="card text-center">
+          <h3 class="font-semibold text-lg mb-2">[Weitere Qualifikation]</h3>
+          <p class="text-gray-muted text-sm">[Details]</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Persönliches -->
+  <section class="section">
+    <div class="container-narrow">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <p class="subheadline mb-4">Persönlich</p>
+          <h2 class="text-3xl font-bold mb-6">Abseits der Praxis</h2>
+          <div class="space-y-4 text-gray-muted">
+            <p>
+              [Persönlicher Text hier ergänzen — Hobbys, Interessen, Familie.
+              Dieser Abschnitt macht den Arzt nahbar.]
+            </p>
+          </div>
+        </div>
+        <div class="aspect-square rounded-2xl bg-gray-200 overflow-hidden">
+          <img
+            src="/images/persoenlich.webp"
+            alt={`${siteConfig.owner.name} — privat`}
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section bg-dark text-white">
+    <div class="container-narrow text-center">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">
+        Lernen Sie mich kennen
+      </h2>
+      <p class="text-gray-400 mb-8 max-w-xl mx-auto">
+        Sie möchten mehr erfahren oder einen Termin vereinbaren?
+        Ich freue mich auf Ihre Nachricht.
+      </p>
+      <a href="/kontakt" class="btn-primary">Kontakt aufnehmen</a>
+    </div>
+  </section>
+</Layout>
