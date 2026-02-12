@@ -9,6 +9,9 @@
  * Nutzung:
  *   node scripts/check-links.mjs                  # Domain aus Config
  *   SITE_URL=https://example.com node scripts/check-links.mjs  # Explizit
+ *
+ * HTTP Basic Auth (fuer passwortgeschuetzte Sites):
+ *   SITE_USER=admin SITE_PASS=geheim node scripts/check-links.mjs
  */
 
 import { readFileSync } from "fs";
@@ -54,11 +57,19 @@ async function fetchWithTimeout(url, timeoutMs = 10_000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
 
+  const headers = { "User-Agent": "poliSYS-LinkChecker/1.0" };
+
+  // HTTP Basic Auth (fuer .htpasswd-geschuetzte Sites)
+  if (process.env.SITE_USER && process.env.SITE_PASS) {
+    const cred = Buffer.from(`${process.env.SITE_USER}:${process.env.SITE_PASS}`).toString("base64");
+    headers["Authorization"] = `Basic ${cred}`;
+  }
+
   try {
     const res = await fetch(url, {
       redirect: "follow",
       signal: controller.signal,
-      headers: { "User-Agent": "poliSYS-LinkChecker/1.0" },
+      headers,
     });
     const html = res.ok ? await res.text() : "";
     return { url, status: res.status, ok: res.ok, html };
@@ -82,8 +93,9 @@ function extractInternalLinks(html, baseUrl) {
   while ((match = regex.exec(html)) !== null) {
     let href = match[1].trim();
 
-    // Skip: externe, mailto, tel, javascript
+    // Skip: externe, mailto, tel, javascript, unaufgeloeste Template-Literals
     if (/^(mailto:|tel:|javascript:)/.test(href)) continue;
+    if (href.includes("${")) continue;
     if (href.startsWith("http") && !href.startsWith(baseUrl)) continue;
 
     // Relative → absolute
