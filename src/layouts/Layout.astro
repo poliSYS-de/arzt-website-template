@@ -13,12 +13,17 @@ interface Props {
 const {
   title,
   description = siteConfig.seo.defaultDescription,
-  ogImage = siteConfig.seo.defaultOgImage,
+  ogImage,
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
 const canonicalURL = `${siteConfig.domain}${currentPath}`;
-const ogImageURL = ogImage.startsWith('http') ? ogImage : `${siteConfig.domain}${ogImage}`;
+
+// Auto-generiertes OG Image: /og/{slug}.png
+const slug = currentPath === '/' ? 'index' : currentPath.replace(/^\/|\/$/g, '');
+const generatedOgPath = `/og/${slug}.png`;
+const resolvedOgImage = ogImage || generatedOgPath;
+const ogImageURL = resolvedOgImage.startsWith('http') ? resolvedOgImage : `${siteConfig.domain}${resolvedOgImage}`;
 ---
 
 <!doctype html>

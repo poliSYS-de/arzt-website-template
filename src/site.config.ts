@@ -71,6 +71,11 @@ export const siteConfig = {
     themeColor: "#2B6CB0",
   },
 
+  // OG Image Generator — HIER ANPASSEN
+  og: {
+    portrait: "/images/portrait.webp", // Optional — leerer String = kein Portrait im OG Image
+  },
+
   // Features
   features: {
     blog: false,
