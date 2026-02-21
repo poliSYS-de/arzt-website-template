@@ -1,0 +1,22 @@
+# === Security Headers ===
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'"
+  Header set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+</IfModule>
+
+# Directory Index (Astro SSG: /seite/ → /seite/index.html)
+DirectoryIndex index.html
+
+# Clean URLs: /seite → /seite/ (Trailing Slash)
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Verzeichnisse ohne Trailing Slash → Redirect mit Slash
+  RewriteCond %{REQUEST_FILENAME} -d
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteRule ^(.*)$ $1/ [L,R=301]
+</IfModule>
