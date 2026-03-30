@@ -20,3 +20,8 @@ node_modules/
 
 # local-only (Fotos, die nicht ins Git sollen)
 local-only/
+
+# Agent-Infrastruktur (nie in Git)
+claude.md
+_work/
+.claude/
