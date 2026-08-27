@@ -35,7 +35,7 @@ jobs:
           lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" <<EOF
           set ftp:ssl-allow yes
           set ftp:ssl-force no
-          mirror --reverse --delete --no-perms --exclude-glob .cagefs --exclude-glob .cl.selector --verbose ./dist/ /beispiel-arzt.de/
+          mirror --reverse --delete --no-perms --parallel=10 --exclude-glob .cagefs --exclude-glob .cl.selector --verbose ./dist/ /beispiel-arzt.de/
           chmod 755 /beispiel-arzt.de
           quit
           EOF
