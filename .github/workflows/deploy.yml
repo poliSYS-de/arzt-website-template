@@ -5,9 +5,19 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Nur ein FTP-Sync dieses Repos gleichzeitig; Folge-Runs warten statt parallel zu syncen
+# (T-SW-260828-deploy-concurrency-timeout). Beim Klonen dieses Templates: group-Kennung
+# eindeutig auf das neue Projekt ändern (analog zum Domain-Platzhalter "beispiel-arzt.de"
+# im Deploy-Schritt unten) - eine geerbte, identische Kennung über mehrere geklonte
+# Projekte wäre schlechter als keine Gruppe.
+concurrency:
+  group: deploy-beispiel-arzt
+  cancel-in-progress: false
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
