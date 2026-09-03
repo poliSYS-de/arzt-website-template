@@ -1,32 +1,40 @@
-name: Build & Deploy to checkdomain.de
+name: Build (Template, kein Deploy)
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-# Nur ein FTP-Sync dieses Repos gleichzeitig; Folge-Runs warten statt parallel zu syncen
+# Dieses Repo ist eine Klon-Vorlage ohne eigene Domain und wird deshalb nicht
+# ausgeliefert (Ticket A-260903-template-deploy-dauerhaft-rot). Der Workflow prüft
+# nur noch, dass das Template baut.
+#
+# Ein Klon MIT eigener Domain trägt seinen Deploy hier ein: lftp mirror mit
+# --parallel=10 nach .claude/rules/astro-ftp-deploy.md (ASTRO-FTP-001), danach den
+# Post-Deploy-Link-Check "node scripts/check-links.mjs". Das Script bleibt dafür im
+# Repo erhalten. Referenz-Pipeline: poliSYS-de/arztbesuche-showcase.
+
+# Nur ein Lauf dieses Repos gleichzeitig; Folge-Runs warten statt parallel zu laufen
 # (T-SW-260828-deploy-concurrency-timeout). Beim Klonen dieses Templates: group-Kennung
-# eindeutig auf das neue Projekt ändern (analog zum Domain-Platzhalter "beispiel-arzt.de"
-# im Deploy-Schritt unten) - eine geerbte, identische Kennung über mehrere geklonte
-# Projekte wäre schlechter als keine Gruppe.
+# eindeutig auf das neue Projekt ändern - eine geerbte, identische Kennung über mehrere
+# geklonte Projekte wäre schlechter als keine Gruppe.
 concurrency:
-  group: deploy-beispiel-arzt
+  group: build-beispiel-arzt
   cancel-in-progress: false
 
 jobs:
-  build-deploy:
+  build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Install Dependencies
@@ -34,24 +42,3 @@ jobs:
 
       - name: Build Astro Site
         run: npm run build
-
-      - name: Deploy to checkdomain.de via FTP
-        env:
-          FTP_HOST: ${{ secrets.FTP_HOST }}
-          FTP_USER: ${{ secrets.FTP_USER }}
-          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
-        run: |
-          sudo apt-get install -y -qq lftp
-          lftp -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" <<EOF
-          set ftp:ssl-allow yes
-          set ftp:ssl-force no
-          mirror --reverse --delete --no-perms --parallel=10 --exclude-glob .cagefs --exclude-glob .cl.selector --verbose ./dist/ /beispiel-arzt.de/
-          chmod 755 /beispiel-arzt.de
-          quit
-          EOF
-
-      - name: Wait for deployment propagation
-        run: sleep 30
-
-      - name: Post-Deploy Link-Check
-        run: node scripts/check-links.mjs
