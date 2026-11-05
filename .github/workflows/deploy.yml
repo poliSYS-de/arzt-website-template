@@ -14,10 +14,11 @@ on:
 # Post-Deploy-Link-Check "node scripts/check-links.mjs". Das Script bleibt dafür im
 # Repo erhalten. Referenz-Pipeline: poliSYS-de/arztbesuche-showcase.
 
-# Nur ein Lauf dieses Repos gleichzeitig; Folge-Runs warten statt parallel zu laufen
-# (T-SW-260828-deploy-concurrency-timeout). Beim Klonen dieses Templates: group-Kennung
-# eindeutig auf das neue Projekt ändern - eine geerbte, identische Kennung über mehrere
-# geklonte Projekte wäre schlechter als keine Gruppe.
+# Nur ein Lauf dieses Repos gleichzeitig (T-SW-260828-deploy-concurrency-timeout).
+# Die Gruppe gilt pro Repository: dieselbe Kennung in getrennten Repos kollidiert nicht.
+# Eine Anpassung der group-Kennung beim Klonen dient daher nur der Verständlichkeit.
+# Ein neuer Lauf ersetzt einen bereits wartenden (Pending); ein laufender Lauf wird
+# bei cancel-in-progress false nie durch einen neuen Lauf abgebrochen.
 concurrency:
   group: build-beispiel-arzt
   cancel-in-progress: false
